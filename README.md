@@ -69,8 +69,10 @@ The Home Screen app keeps its own storage, separate from Safari tabs. Recipes im
 2. Open the iPad's **Settings → Display & Brightness → Auto-Lock** and set it to **2 minutes** for this test.
 3. Start cooking any recipe and leave the iPad alone for 3 minutes.
 4. Check the screen stayed on:
-   - **If it did:** you're done. **Settings → Keep the screen on** shows *Screen Wake Lock*.
-   - **If it dimmed:** set **Settings → Keep the screen on** to **Video fallback** and try again.
+   - **If it did:** you're done.
+   - **If it dimmed:** set **Settings → Keep the screen on → Silent video** to **Always** and try again.
+
+   The screen stays on whenever the app is open, using Screen Wake Lock plus, on iPad and iPhone, a silent video that starts on your first tap. **Settings** shows what's active.
 
 ### 7. Keep a backup
 
@@ -101,8 +103,8 @@ Recipes live only on each device, and Safari can clear website data that hasn't 
 **Timers:**
 
 - A step with a timer shows it ready to start. Adjust it with **−1 min** and **+1 min**, or tap the time to type minutes (`7`, `7.5` or `7:30`).
-- Running timers sit in the tray under the header, with pause, **+1 min** and cancel.
-- **+ Timer** adds a quick timer that isn't tied to a step.
+- Running timers appear at the top, with pause, **+1 min** and cancel. The timer row only shows while a timer is running, to leave more room for the step.
+- **Timer** (the **+** button at the top) adds a quick timer that isn't tied to a step.
 - Several timers can run at once, and Done doesn't stop them.
 
 **When a timer ends:**
@@ -115,7 +117,7 @@ Recipes live only on each device, and Safari can clear website data that hasn't 
 
 - Timers work from saved end times, so they stay right through sleep, reloads and switching apps.
 - A web app can't ring reliably in the background. When you come back, anything that finished meanwhile rings and says how long ago.
-- The screen is kept on in Before you start, in cook mode and whenever a timer is running, which covers the background problem.
+- The screen stays on whenever the app is open, which covers the background problem.
 
 **Leaving and coming back:**
 

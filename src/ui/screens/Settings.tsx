@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { SUPPORTED_VERSION } from '../../core/schema';
 import { extractJson } from '../../core/parse';
 import { testChime } from '../../platform/audio';
-import { refreshKeepAwake, useKeepAwakeStatus, wakeLockSupported } from '../../platform/keepAwake';
+import { isAppleTouchDevice, refreshKeepAwake, useKeepAwakeStatus } from '../../platform/keepAwake';
 import {
   getKeepAwakeMode,
   getThemePref,
@@ -48,16 +48,15 @@ export function SettingsScreen({ updateReady, onUpdate }: { updateReady: boolean
     if (await restoreBackup(extracted.values[0])) navigate({ name: 'library' });
   };
 
-  const methodText =
-    status.method === 'wake-lock'
-      ? `Screen Wake Lock${status.holding ? ' (holding now)' : ''}`
-      : status.method === 'video'
-        ? `Silent video fallback${status.holding ? ' (playing now)' : ''}`
-        : keepAwake === 'video'
-          ? 'Silent video fallback (starts in cook mode)'
-          : wakeLockSupported()
-            ? 'Screen Wake Lock (starts in cook mode)'
-            : 'Silent video fallback: this browser has no Wake Lock (starts in cook mode)';
+  const wakeLockText = {
+    holding: 'on',
+    released: 'released, asking again',
+    refused: 'refused by this device',
+    unsupported: 'not available in this browser',
+    off: 'off',
+  }[status.wakeLock];
+  const videoText = { playing: 'playing', 'waiting-for-tap': 'starts on your next tap', off: 'not needed here' }[status.video];
+  const appleDevice = isAppleTouchDevice();
 
   return (
     <div className="screen settings">
@@ -82,15 +81,21 @@ export function SettingsScreen({ updateReady, onUpdate }: { updateReady: boolean
 
         <section className="settings-group">
           <h2>Keep the screen on</h2>
-          <p className="muted">
-            The screen stays on in Before you start and Cook mode, and whenever a timer is running.
-          </p>
+          <p className="muted">The screen stays on whenever this app is open.</p>
+          <ul className="plain-list status-line">
+            <li>
+              <strong>Screen Wake Lock:</strong> {wakeLockText}
+            </li>
+            <li>
+              <strong>Silent video:</strong> {videoText}
+            </li>
+          </ul>
           <Segmented
-            label="Keep the screen on using"
+            label="Silent video"
             value={keepAwake}
             options={[
-              ['auto', 'Automatic'],
-              ['video', 'Video fallback'],
+              ['auto', appleDevice ? 'Automatic (on for iPad)' : 'Only if needed'],
+              ['video', 'Always'],
             ]}
             onChange={(v) => {
               setKeepAwake(v);
@@ -98,13 +103,9 @@ export function SettingsScreen({ updateReady, onUpdate }: { updateReady: boolean
               refreshKeepAwake();
             }}
           />
-          <p className="status-line">
-            <strong>Using:</strong> {methodText}
-            {status.note ? `. ${status.note}` : ''}
-          </p>
           <p className="muted small">
-            If the screen still dims during cooking, switch to Video fallback. It plays a tiny silent, invisible video, which iPads and phones treat as
-            “something is playing”.
+            The silent video is an invisible, soundless clip that plays in the background, because iPads and phones stay awake while a video plays. It
+            starts on your first tap after opening the app. If the screen still turns off on this device, choose Always.
           </p>
         </section>
 

@@ -50,14 +50,19 @@ export function TimerAlerts() {
   useEffect(() => () => stopChime(), []);
 
   // A cook is on: make sure the next tap anywhere re-enables sound if the system suspended it.
+  // (click/touchend, not pointerdown: browsers only accept those as permission to play sound.)
   const cooking = !!session;
   useEffect(() => {
     if (!cooking) return;
     const onTap = () => {
       if (!isAudioReady()) unlockAudio();
     };
-    document.addEventListener('pointerdown', onTap, true);
-    return () => document.removeEventListener('pointerdown', onTap, true);
+    document.addEventListener('click', onTap, true);
+    document.addEventListener('touchend', onTap, true);
+    return () => {
+      document.removeEventListener('click', onTap, true);
+      document.removeEventListener('touchend', onTap, true);
+    };
   }, [cooking]);
 
   const ringing = ringingTimers(timers, now);
@@ -90,21 +95,16 @@ export function TimerAlerts() {
   );
 }
 
-/** The tray under the cook-mode header: every timer with pause/resume, +1 min and cancel, plus "+ Timer". */
-export function TimerTray({ session, onAdd }: { session: CookSession; onAdd?: () => void }) {
+/** The running timers, each with pause/resume, +1 min and cancel. Nothing when there are none. */
+export function TimerTray({ session }: { session: CookSession }) {
   const now = useNow(250, session.timers.length > 0);
+  if (!session.timers.length) return null;
   const timers = sortForTray(session.timers, now);
   return (
     <div className="tray" aria-label="Timers">
       {timers.map((t) => (
         <TrayItem key={t.id} timer={t} now={now} />
       ))}
-      {onAdd && (
-        <button className="btn tray-add" onClick={onAdd} aria-label="Add a timer">
-          <Icon name="plus" />
-          <span>Timer</span>
-        </button>
-      )}
     </div>
   );
 }
@@ -196,7 +196,7 @@ export function TimerControl({ session, step }: { session: CookSession; step: St
             </button>
           </div>
         </div>
-        <p className="timer-hint">{finished ? 'Time’s up.' : paused ? 'Paused.' : 'Running. Also in the tray above.'}</p>
+        <p className="timer-hint">{finished ? 'Time’s up.' : paused ? 'Paused.' : 'Running. Also shown at the top.'}</p>
       </section>
     );
   }

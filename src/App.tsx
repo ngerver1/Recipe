@@ -1,11 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
-import { isFinished, isRunning } from './core/timers';
 import { useKeepAwake } from './platform/keepAwake';
 import { useAppState } from './state/store';
 import { DialogHost, ToastHost } from './ui/components/overlays';
 import { TimerAlerts } from './ui/components/timers';
-import { useNow } from './ui/hooks';
 import { setPendingImport } from './ui/pendingImport';
 import { navigate, useRoute } from './ui/router';
 import { CookScreen } from './ui/screens/Cook';
@@ -34,10 +32,8 @@ export function App() {
     }
   }, [loaded, session, route.name]);
 
-  // Keep the screen on while preparing or cooking, and whenever a timer is going.
-  const now = useNow(5000, !!session?.timers.length);
-  const timerGoing = !!session?.timers.some((t) => isRunning(t, now) || isFinished(t, now));
-  useKeepAwake(route.name === 'recipe' || route.name === 'cook' || route.name === 'finished' || timerGoing);
+  // The screen never turns itself off while the app is open.
+  useKeepAwake(true);
 
   // Drag and drop a .json file anywhere (desktop).
   useEffect(() => {

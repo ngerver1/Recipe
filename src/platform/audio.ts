@@ -94,11 +94,12 @@ function vibrate(pattern: number | number[]) {
 }
 
 function setPlaybackSession(on: boolean) {
-  // Safari: "playback" isn't muted by silent mode. Only while ringing, so music elsewhere isn't interrupted otherwise.
+  // Safari: "playback" isn't muted by silent mode. Only while ringing; the rest of the time "ambient"
+  // mixes with any music or podcast instead of stopping it.
   const session = (navigator as AudioSessionNavigator).audioSession;
   if (session) {
     try {
-      session.type = on ? 'playback' : 'auto';
+      session.type = on ? 'playback' : 'ambient';
     } catch {
       // ignore
     }

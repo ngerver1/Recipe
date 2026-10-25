@@ -118,6 +118,7 @@ function CookView({ session, recipe }: { session: CookSession; recipe: Recipe })
             Step {index + 1} of {steps.length}
           </p>
         </div>
+        {session.timers.length > 0 && <TimerTray session={session} />}
         <nav className="cook-actions" aria-label="Cook mode">
           {!audioReady && (
             <button className="btn btn-sound" onClick={() => unlockAudio()}>
@@ -125,6 +126,10 @@ function CookView({ session, recipe }: { session: CookSession; recipe: Recipe })
               <span>Tap for sound</span>
             </button>
           )}
+          <button className="btn btn-icon-label" onClick={() => setSheet('timer')} aria-label="Add a timer">
+            <Icon name="plus" />
+            <span>Timer</span>
+          </button>
           <button className="btn btn-icon-label" onClick={() => setSheet('ingredients')}>
             <Icon name="basket" />
             <span>Ingredients</span>
@@ -138,7 +143,6 @@ function CookView({ session, recipe }: { session: CookSession; recipe: Recipe })
             <span>Exit</span>
           </button>
         </nav>
-        <TimerTray session={session} onAdd={() => setSheet('timer')} />
         <div
           className="progress"
           role="progressbar"
@@ -216,7 +220,9 @@ function SideCard({
             {done && <Icon name="check" size={20} />}
             {label}
           </span>
-          <span className="side-title">{step.title}</span>
+          <span className="side-title">
+            {index + 1}. {step.title}
+          </span>
           <span className="side-text">{step.text}</span>
           {kind === 'next' && timer && (
             <span className="side-timer">
@@ -230,7 +236,9 @@ function SideCard({
           {done ? <Icon name="check" size={22} /> : null}
           <span className="side-row-text">
             {kind === 'next' ? 'Next: ' : ''}
-            <strong>{step.title}</strong>
+            <strong>
+              {index + 1}. {step.title}
+            </strong>
             {kind === 'next' && timer ? ` · ${timer}` : ''}
           </span>
         </span>
@@ -283,16 +291,13 @@ function CurrentCard({
   return (
     <article className={`card card-current${isDone ? ' is-done' : ''}`} style={vt(index)} aria-labelledby="current-step-title">
       <div className="card-body" ref={body}>
-        <p className="step-section">
-          {step.section ? `${step.section} · ` : ''}Step {index + 1}
+        <h2 className="step-title" id="current-step-title">
+          {index + 1}. {step.title}
           {isDone && (
             <span className="done-badge">
-              <Icon name="check" size={18} /> Done
+              <Icon name="check" size={16} /> Done
             </span>
           )}
-        </p>
-        <h2 className="step-title" id="current-step-title">
-          {step.title}
         </h2>
         <p className="step-text">{step.text}</p>
         {!!step.uses?.length && (
