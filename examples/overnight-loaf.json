@@ -1,0 +1,80 @@
+{
+  "format": "recipe-cards",
+  "version": 1,
+  "agentVersion": "2026.10",
+  "title": "Overnight no-knead loaf",
+  "source": { "site": "Family recipe" },
+  "yield": "1 loaf",
+  "times": { "prepMinutes": 15, "totalMinutes": 1020 },
+  "equipment": ["Large bowl", "Cast-iron pot with lid", "Baking paper", "Wire rack"],
+  "notes": "Edge-case example: no URL, a yield instead of servings, no ingredient groups or step sections, timers measured in hours, steps without `uses`, two background timers running together, and unknown fields that the app should ignore.",
+  "ingredients": [
+    { "id": "flour", "name": "bread flour", "quantity": 500, "unit": "g", "aisle": "baking" },
+    { "id": "salt", "name": "fine salt", "quantity": 10, "unit": "g" },
+    { "id": "yeast", "name": "instant dried yeast", "quantity": 0.25, "unit": "tsp" },
+    { "id": "water", "name": "lukewarm water", "quantity": 400, "unit": "ml" },
+    { "id": "dusting-flour", "name": "extra flour for dusting", "quantity": null, "unit": null }
+  ],
+  "steps": [
+    {
+      "id": "mix",
+      "title": "Mix the dough",
+      "text": "Stir 500 g bread flour, 10 g salt and ¼ tsp yeast in a large bowl. Add 400 ml lukewarm water and mix to a shaggy dough.",
+      "uses": [
+        { "ingredient": "flour", "quantity": 500, "unit": "g" },
+        { "ingredient": "salt", "quantity": 10, "unit": "g" },
+        { "ingredient": "yeast", "quantity": 0.25, "unit": "tsp" },
+        { "ingredient": "water", "quantity": 400, "unit": "ml" }
+      ],
+      "cue": "No dry flour left.",
+      "image": null
+    },
+    {
+      "id": "first-rise",
+      "title": "Leave overnight",
+      "text": "Cover the bowl and leave it at room temperature overnight.",
+      "timer": { "seconds": 43200, "maxSeconds": 64800, "label": "First rise", "background": true },
+      "cue": "More than doubled, bubbly and wobbly."
+    },
+    {
+      "id": "shape",
+      "title": "Shape the loaf",
+      "text": "Tip the dough onto a well-floured bench. Fold the edges into the middle to make a round, then turn it seam side down onto a sheet of baking paper.",
+      "uses": [{ "ingredient": "dusting-flour", "quantity": null, "unit": null }],
+      "tip": "Use floured hands. The dough is meant to be sticky."
+    },
+    {
+      "id": "second-rise",
+      "title": "Second rise",
+      "text": "Cover loosely with a tea towel and leave to rise again. Heat the pot in the next step while it rises.",
+      "timer": { "seconds": 3600, "maxSeconds": 7200, "label": "Second rise", "background": true },
+      "cue": "Puffy, and a fingertip dent springs back slowly."
+    },
+    {
+      "id": "heat-pot",
+      "title": "Heat the pot",
+      "text": "Put the lidded cast-iron pot in the oven and heat it to 240°C.",
+      "timer": { "seconds": 1800, "label": "Heat pot", "background": true }
+    },
+    {
+      "id": "bake-covered",
+      "title": "Bake with the lid on",
+      "text": "Carefully lift the dough on its paper into the hot pot. Put the lid on and bake.",
+      "timer": { "seconds": 1800, "label": "Lid on" },
+      "tip": "Oven gloves: the pot is very hot."
+    },
+    {
+      "id": "bake-uncovered",
+      "title": "Bake with the lid off",
+      "text": "Take the lid off and bake until the crust is deep brown.",
+      "timer": { "seconds": 900, "maxSeconds": 1200, "label": "Lid off" },
+      "cue": "Deep brown, and it sounds hollow when tapped underneath."
+    },
+    {
+      "id": "cool",
+      "title": "Cool before slicing",
+      "text": "Lift the loaf onto a wire rack and leave it to cool before cutting.",
+      "timer": { "seconds": 3600, "label": "Cooling", "background": true }
+    }
+  ]
+}

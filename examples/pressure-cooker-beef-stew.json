@@ -1,0 +1,462 @@
+{
+  "format": "recipe-cards",
+  "version": 1,
+  "title": "Pressure Cooker Beef and Vegetable Stew",
+  "source": {
+    "url": "https://www.seriouseats.com/pressure-cooker-beef-stew-recipe",
+    "site": "Serious Eats",
+    "author": "J. Kenji López-Alt"
+  },
+  "servings": 6,
+  "times": {
+    "prepMinutes": 5,
+    "cookMinutes": 75,
+    "totalMinutes": 80
+  },
+  "equipment": [
+    "Blender",
+    "Electric or stovetop pressure cooker",
+    "Rimmed baking sheet or large plate",
+    "Large bowl",
+    "Tongs",
+    "Wooden spoon"
+  ],
+  "notes": "Amounts use the recipe's own metric figures; US tablespoons of liquid are given in ml. The source lists the beef as 3 lb (1.25 kg), but 3 lb is closer to 1.36 kg, so anything from 1.25 to 1.4 kg of chuck works. Instead of the anchovies you can use 15 ml Asian fish sauce. The wine can be dry sherry, dry vermouth or red wine. Several reviewers found the stated pressure times too long and cut them to about 18 minutes for the beef and 4 minutes after the potatoes go in; the cards keep the recipe's 30 and 15 minutes. The stew keeps for up to 5 days in the fridge and reheats well.",
+  "ingredients": [
+    {
+      "id": "stock",
+      "name": "low-sodium chicken stock",
+      "quantity": 720,
+      "unit": "ml",
+      "original": "3 cups (720ml)",
+      "note": "homemade or store-bought",
+      "group": "Broth base"
+    },
+    {
+      "id": "gelatin",
+      "name": "powdered unflavoured gelatine",
+      "quantity": 30,
+      "unit": "g",
+      "original": "4 packets (1 ounce; 30g)",
+      "group": "Broth base"
+    },
+    {
+      "id": "tomato-paste",
+      "name": "tomato paste",
+      "quantity": 75,
+      "unit": "g",
+      "original": "3 tablespoons (2.5 ounces; 75g)",
+      "group": "Broth base"
+    },
+    {
+      "id": "soy-sauce",
+      "name": "soy sauce",
+      "quantity": 15,
+      "unit": "ml",
+      "original": "1 tablespoon (15ml)",
+      "group": "Broth base"
+    },
+    {
+      "id": "anchovies",
+      "name": "anchovy fillets",
+      "quantity": 3,
+      "unit": null,
+      "original": "3 oil- or salt-packed anchovy fillets, rinsed (or 1 tablespoon/15ml Asian fish sauce)",
+      "note": "oil- or salt-packed, rinsed; or 15 ml fish sauce",
+      "group": "Broth base"
+    },
+    {
+      "id": "worcestershire",
+      "name": "Worcestershire sauce",
+      "quantity": 15,
+      "unit": "ml",
+      "original": "1 tablespoon (15ml)",
+      "group": "Broth base"
+    },
+    {
+      "id": "oil",
+      "name": "vegetable oil",
+      "quantity": 30,
+      "unit": "ml",
+      "original": "2 tablespoons (30ml)",
+      "group": "Stew"
+    },
+    {
+      "id": "beef",
+      "name": "boneless beef chuck roast",
+      "quantity": 1.25,
+      "unit": "kg",
+      "original": "3 pounds (1.25kg)",
+      "note": "cut into 3 steaks",
+      "group": "Stew"
+    },
+    {
+      "id": "salt-pepper",
+      "name": "kosher salt and freshly ground black pepper",
+      "quantity": null,
+      "unit": null,
+      "note": "to taste",
+      "group": "Stew"
+    },
+    {
+      "id": "mushrooms",
+      "name": "white button mushrooms",
+      "quantity": 280,
+      "unit": "g",
+      "original": "10 ounces (280g)",
+      "note": "quartered",
+      "group": "Stew"
+    },
+    {
+      "id": "carrots",
+      "name": "medium carrots",
+      "quantity": 4,
+      "unit": null,
+      "original": "4 medium carrots (10 ounces; 275g)",
+      "note": "2 left whole, 2 cut into bite-size pieces",
+      "group": "Stew"
+    },
+    {
+      "id": "pearl-onions",
+      "name": "pearl onions",
+      "quantity": 225,
+      "unit": "g",
+      "original": "8 ounces (225g)",
+      "note": "frozen (thawed) or fresh (peeled)",
+      "group": "Stew"
+    },
+    {
+      "id": "yellow-onion",
+      "name": "large brown onion",
+      "quantity": 1,
+      "unit": null,
+      "original": "1 large yellow onion (10 ounces; 275g)",
+      "note": "unpeeled, halved",
+      "group": "Aromatics (discarded)"
+    },
+    {
+      "id": "celery",
+      "name": "small celery sticks",
+      "quantity": 2,
+      "unit": null,
+      "original": "2 small ribs celery (3 ounces; 85g)",
+      "group": "Aromatics (discarded)"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic cloves",
+      "quantity": 3,
+      "unit": null,
+      "original": "3 medium cloves garlic, unpeeled",
+      "note": "medium, unpeeled",
+      "group": "Aromatics (discarded)"
+    },
+    {
+      "id": "wine",
+      "name": "dry sherry, dry vermouth or red wine",
+      "quantity": 235,
+      "unit": "ml",
+      "original": "1 cup (8 ounces; 235ml)",
+      "group": "Stew"
+    },
+    {
+      "id": "flour",
+      "name": "plain flour",
+      "quantity": 20,
+      "unit": "g",
+      "original": "2 tablespoons (about 3/4 ounce; 20g)",
+      "group": "Stew"
+    },
+    {
+      "id": "bay-leaves",
+      "name": "bay leaves",
+      "quantity": 2,
+      "unit": null,
+      "group": "Aromatics (discarded)"
+    },
+    {
+      "id": "thyme",
+      "name": "thyme sprigs",
+      "quantity": 4,
+      "unit": null,
+      "group": "Aromatics (discarded)"
+    },
+    {
+      "id": "potatoes",
+      "name": "Yukon Gold potatoes",
+      "quantity": 450,
+      "unit": "g",
+      "original": "1 pound (450g)",
+      "note": "peeled and cubed",
+      "group": "Stew"
+    },
+    {
+      "id": "peas",
+      "name": "frozen peas",
+      "quantity": 100,
+      "unit": "g",
+      "original": "4 ounces (100g)",
+      "group": "Stew"
+    }
+  ],
+  "steps": [
+    {
+      "id": "s1",
+      "section": "Broth base",
+      "title": "Blend the broth base",
+      "text": "Blend 720 ml stock, 30 g gelatine, 75 g tomato paste, 15 ml soy sauce, 3 anchovy fillets and 15 ml Worcestershire on high speed. Set aside.",
+      "uses": [
+        {
+          "ingredient": "stock",
+          "quantity": 720,
+          "unit": "ml"
+        },
+        {
+          "ingredient": "gelatin",
+          "quantity": 30,
+          "unit": "g"
+        },
+        {
+          "ingredient": "tomato-paste",
+          "quantity": 75,
+          "unit": "g"
+        },
+        {
+          "ingredient": "soy-sauce",
+          "quantity": 15,
+          "unit": "ml"
+        },
+        {
+          "ingredient": "anchovies",
+          "quantity": 3,
+          "unit": null
+        },
+        {
+          "ingredient": "worcestershire",
+          "quantity": 15,
+          "unit": "ml"
+        }
+      ],
+      "cue": "Until homogeneous.",
+      "tip": "If your pearl onions are frozen, set them out to thaw now. They go in at the mushroom stage."
+    },
+    {
+      "id": "s2",
+      "section": "Beef",
+      "title": "Brown the beef",
+      "text": "Heat 30 ml oil in the pressure cooker over medium-high until shimmering. Season the 3 chuck steaks all over with salt and pepper, then brown in a single layer, turning occasionally.",
+      "uses": [
+        {
+          "ingredient": "oil",
+          "quantity": 30,
+          "unit": "ml"
+        },
+        {
+          "ingredient": "beef",
+          "quantity": 1.25,
+          "unit": "kg"
+        },
+        {
+          "ingredient": "salt-pepper",
+          "quantity": null,
+          "unit": null
+        }
+      ],
+      "timer": {
+        "seconds": 600,
+        "label": "Brown beef"
+      },
+      "cue": "Well browned on 2 sides.",
+      "tip": "Work in batches if the steaks don't fit in one layer."
+    },
+    {
+      "id": "s3",
+      "section": "Beef",
+      "title": "Set the beef aside",
+      "text": "Transfer the browned steaks to a rimmed baking sheet or large plate and set aside. Keep any juices that collect."
+    },
+    {
+      "id": "s4",
+      "section": "Vegetables",
+      "title": "Brown the mushrooms",
+      "text": "Add 280 g quartered mushrooms to the cooker and cook, stirring, lowering the heat as needed to stop them scorching.",
+      "uses": [
+        {
+          "ingredient": "mushrooms",
+          "quantity": 280,
+          "unit": "g"
+        }
+      ],
+      "timer": {
+        "seconds": 360,
+        "label": "Mushrooms"
+      },
+      "cue": "Liquid released and mushrooms starting to brown."
+    },
+    {
+      "id": "s5",
+      "section": "Vegetables",
+      "title": "Brown carrots and onions",
+      "text": "Add the 2 chopped carrots and 225 g pearl onions and cook, stirring, a few minutes longer. Season with salt and pepper, then transfer to a bowl and set aside.",
+      "uses": [
+        {
+          "ingredient": "carrots",
+          "quantity": 2,
+          "unit": null
+        },
+        {
+          "ingredient": "pearl-onions",
+          "quantity": 225,
+          "unit": "g"
+        },
+        {
+          "ingredient": "salt-pepper",
+          "quantity": null,
+          "unit": null
+        }
+      ],
+      "cue": "Well browned on all sides."
+    },
+    {
+      "id": "s6",
+      "section": "Aromatics",
+      "title": "Brown the aromatics",
+      "text": "Add the halved onion cut side down, plus the 2 whole carrots, 2 celery sticks and 3 unpeeled garlic cloves. Cook, turning the carrots, celery and garlic occasionally.",
+      "uses": [
+        {
+          "ingredient": "yellow-onion",
+          "quantity": 1,
+          "unit": null
+        },
+        {
+          "ingredient": "carrots",
+          "quantity": 2,
+          "unit": null
+        },
+        {
+          "ingredient": "celery",
+          "quantity": 2,
+          "unit": null
+        },
+        {
+          "ingredient": "garlic",
+          "quantity": 3,
+          "unit": null
+        }
+      ],
+      "timer": {
+        "seconds": 240,
+        "label": "Aromatics"
+      },
+      "cue": "All vegetables well browned."
+    },
+    {
+      "id": "s7",
+      "section": "Stew",
+      "title": "Deglaze and add broth",
+      "text": "Add 235 ml sherry or wine, scrape up the browned bits with a wooden spoon and reduce. Then pour in the blended broth base.",
+      "uses": [
+        {
+          "ingredient": "wine",
+          "quantity": 235,
+          "unit": "ml"
+        }
+      ],
+      "timer": {
+        "seconds": 180,
+        "label": "Reduce wine"
+      },
+      "cue": "Wine reduced by three-quarters."
+    },
+    {
+      "id": "s8",
+      "section": "Stew",
+      "title": "Cut and flour the beef",
+      "text": "Cut the seared steaks into 4–5 cm chunks, put them in a large bowl and toss with 20 g flour.",
+      "uses": [
+        {
+          "ingredient": "flour",
+          "quantity": 20,
+          "unit": "g"
+        }
+      ]
+    },
+    {
+      "id": "s9",
+      "section": "Stew",
+      "title": "Seal and pressurise",
+      "text": "Add the beef and any tray juices to the cooker with 2 bay leaves and 4 thyme sprigs. Stir, seal and bring to high pressure.",
+      "uses": [
+        {
+          "ingredient": "bay-leaves",
+          "quantity": 2,
+          "unit": null
+        },
+        {
+          "ingredient": "thyme",
+          "quantity": 4,
+          "unit": null
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "section": "Stew",
+      "title": "Pressure cook the beef",
+      "text": "Cook at high pressure, then rapidly release the pressure and open the cooker.",
+      "timer": {
+        "seconds": 1800,
+        "label": "High pressure"
+      },
+      "tip": "Start the timer once the cooker reaches high pressure."
+    },
+    {
+      "id": "s11",
+      "section": "Stew",
+      "title": "Remove the aromatics",
+      "text": "With tongs, fish out and discard the whole carrots, celery, thyme, bay leaves, onion and garlic."
+    },
+    {
+      "id": "s12",
+      "section": "Stew",
+      "title": "Add potatoes and vegetables",
+      "text": "Add 450 g cubed potatoes and the reserved mushrooms, pearl onions and carrots. Reseal and bring back to high pressure.",
+      "uses": [
+        {
+          "ingredient": "potatoes",
+          "quantity": 450,
+          "unit": "g"
+        }
+      ]
+    },
+    {
+      "id": "s13",
+      "section": "Stew",
+      "title": "Finish pressure cooking",
+      "text": "Cook at high pressure, then rapidly release the pressure.",
+      "timer": {
+        "seconds": 900,
+        "label": "High pressure"
+      }
+    },
+    {
+      "id": "s14",
+      "section": "Finish",
+      "title": "Add peas and serve",
+      "text": "Stir in 100 g frozen peas and season with salt and pepper if needed. Serve straight away.",
+      "uses": [
+        {
+          "ingredient": "peas",
+          "quantity": 100,
+          "unit": "g"
+        },
+        {
+          "ingredient": "salt-pepper",
+          "quantity": null,
+          "unit": null
+        }
+      ],
+      "tip": "Or cool and refrigerate for up to 5 days, then reheat to serve."
+    }
+  ]
+}

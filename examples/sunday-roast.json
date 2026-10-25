@@ -1,0 +1,131 @@
+{
+  "format": "recipe-cards",
+  "version": 1,
+  "title": "Roast chicken with crispy potatoes and gravy",
+  "source": {
+    "url": "https://example.com/recipes/sunday-roast-chicken?utm_source=newsletter",
+    "site": "Example Kitchen"
+  },
+  "servings": 4,
+  "times": { "prepMinutes": 20, "cookMinutes": 100, "totalMinutes": 120 },
+  "equipment": ["Large roasting tin", "Second roasting tray", "Large saucepan", "Colander", "Foil", "Meat thermometer (optional)"],
+  "notes": "Edge-case example: three background timers overlap (chicken, potatoes, carrots), most timers are ranges, and some ingredients have no quantity. Butter and oil are split across steps.",
+  "ingredients": [
+    { "id": "chicken", "name": "whole chicken", "quantity": 1.8, "unit": "kg", "original": "4 lb", "group": "Chicken" },
+    { "id": "butter", "name": "butter", "quantity": 40, "unit": "g", "note": "softened", "group": "Chicken" },
+    { "id": "lemon", "name": "lemon", "quantity": 1, "unit": null, "note": "halved", "group": "Chicken" },
+    { "id": "thyme", "name": "thyme sprigs", "quantity": 4, "unit": null, "group": "Chicken" },
+    { "id": "dried-thyme", "name": "dried thyme", "quantity": 0.5, "unit": "tsp", "group": "Chicken" },
+    { "id": "salt-pepper", "name": "salt and pepper", "quantity": null, "unit": null, "note": "to taste", "group": "Chicken" },
+    { "id": "potatoes", "name": "roasting potatoes", "quantity": 1200, "unit": "g", "note": "peeled and halved", "group": "Potatoes" },
+    { "id": "water", "name": "water", "quantity": null, "unit": null, "note": "a large pot, salted", "group": "Potatoes" },
+    { "id": "oil", "name": "olive oil", "quantity": 75, "unit": "ml", "group": "Potatoes" },
+    { "id": "carrots", "name": "carrots", "quantity": 500, "unit": "g", "note": "halved lengthways", "group": "Carrots" },
+    { "id": "honey", "name": "honey", "quantity": 1, "unit": "tbsp", "group": "Carrots" },
+    { "id": "flour", "name": "plain flour", "quantity": 20, "unit": "g", "group": "Gravy" },
+    { "id": "stock", "name": "chicken stock", "quantity": 375, "unit": "ml", "group": "Gravy" },
+    { "id": "parsley", "name": "flat-leaf parsley", "quantity": null, "unit": null, "note": "a small handful, chopped" }
+  ],
+  "steps": [
+    {
+      "id": "prep-1",
+      "section": "Chicken",
+      "title": "Heat the oven",
+      "text": "Heat the oven to 220°C (200°C fan). Take the chicken out of the fridge.",
+      "tip": "Chicken that isn't fridge-cold cooks more evenly."
+    },
+    {
+      "id": "prep-2",
+      "section": "Chicken",
+      "title": "Season the chicken",
+      "text": "Pat the chicken dry. Rub it all over with 30 g butter, ½ tsp dried thyme, salt and pepper. Put the lemon halves and 4 thyme sprigs inside.",
+      "uses": [
+        { "ingredient": "chicken", "quantity": 1.8, "unit": "kg" },
+        { "ingredient": "butter", "quantity": 30, "unit": "g" },
+        { "ingredient": "dried-thyme", "quantity": 0.5, "unit": "tsp" },
+        { "ingredient": "salt-pepper", "quantity": null, "unit": null },
+        { "ingredient": "lemon", "quantity": 1, "unit": null },
+        { "ingredient": "thyme", "quantity": 4, "unit": null }
+      ]
+    },
+    {
+      "id": "roast",
+      "section": "Chicken",
+      "title": "Roast the chicken",
+      "text": "Put the chicken in the roasting tin, breast side up, and roast. Carry on with the potatoes while it cooks.",
+      "timer": { "seconds": 4500, "maxSeconds": 5400, "label": "Chicken", "background": true },
+      "cue": "Juices run clear when you pierce the thigh, or 74°C in the thickest part."
+    },
+    {
+      "id": "parboil",
+      "section": "Potatoes",
+      "title": "Parboil the potatoes",
+      "text": "Put 1.2 kg halved potatoes in a large pot of cold salted water, bring to the boil and simmer.",
+      "uses": [
+        { "ingredient": "potatoes", "quantity": 1200, "unit": "g" },
+        { "ingredient": "water", "quantity": null, "unit": null }
+      ],
+      "timer": { "seconds": 480, "maxSeconds": 600, "label": "Parboil" },
+      "cue": "Edges soft, centres still firm."
+    },
+    {
+      "id": "rough-up",
+      "section": "Potatoes",
+      "title": "Rough up the potatoes",
+      "text": "Drain well and leave to steam dry for 2 minutes, then put the lid on and shake the pan to fluff the edges.",
+      "tip": "The fluffy edges are what turn crisp."
+    },
+    {
+      "id": "roast-potatoes",
+      "section": "Potatoes",
+      "title": "Roast the potatoes",
+      "text": "Heat 60 ml olive oil in the second tray in the oven for 5 minutes. Tip in the potatoes, turn to coat and roast on the shelf below the chicken.",
+      "uses": [{ "ingredient": "oil", "quantity": 60, "unit": "ml" }],
+      "timer": { "seconds": 2700, "maxSeconds": 3000, "label": "Potatoes", "background": true },
+      "cue": "Deep golden and crisp. Turn once halfway."
+    },
+    {
+      "id": "carrots",
+      "section": "Carrots",
+      "title": "Roast the carrots",
+      "text": "Toss 500 g carrots with 15 ml olive oil and 1 tbsp honey. Add them to the potato tray.",
+      "uses": [
+        { "ingredient": "carrots", "quantity": 500, "unit": "g" },
+        { "ingredient": "oil", "quantity": 15, "unit": "ml" },
+        { "ingredient": "honey", "quantity": 1, "unit": "tbsp" }
+      ],
+      "timer": { "seconds": 1500, "maxSeconds": 1800, "label": "Carrots", "background": true },
+      "cue": "Tender, with sticky browned edges."
+    },
+    {
+      "id": "rest",
+      "section": "Chicken",
+      "title": "Rest the chicken",
+      "text": "Lift the chicken onto a board, cover loosely with foil and leave to rest. Keep the roasting tin and its juices for the gravy.",
+      "timer": { "seconds": 900, "label": "Resting", "background": true }
+    },
+    {
+      "id": "gravy",
+      "section": "Gravy",
+      "title": "Make the gravy",
+      "text": "Put the roasting tin over medium heat. Stir 20 g flour and 10 g butter into the juices, then whisk in 375 ml stock and simmer.",
+      "uses": [
+        { "ingredient": "flour", "quantity": 20, "unit": "g" },
+        { "ingredient": "butter", "quantity": 10, "unit": "g" },
+        { "ingredient": "stock", "quantity": 375, "unit": "ml" }
+      ],
+      "timer": { "seconds": 240, "maxSeconds": 360, "label": "Gravy" },
+      "cue": "Thick enough to coat the back of a spoon."
+    },
+    {
+      "id": "serve",
+      "section": "Serve",
+      "title": "Carve and serve",
+      "text": "Season the gravy with salt and pepper. Carve the chicken and serve with the potatoes and carrots, scattered with parsley.",
+      "uses": [
+        { "ingredient": "salt-pepper", "quantity": null, "unit": null },
+        { "ingredient": "parsley", "quantity": null, "unit": null }
+      ]
+    }
+  ]
+}
