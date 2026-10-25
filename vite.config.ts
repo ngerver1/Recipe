@@ -1,19 +1,22 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import pkg from './package.json' with { type: 'json' };
 
 // Served from https://ngerver1.github.io/Recipe/
 const base = process.env.BASE_PATH ?? '/Recipe/';
 
 export default defineConfig({
   base,
+  define: {
+    __APP_VERSION__: JSON.stringify(`${pkg.version} (${new Date().toISOString().slice(0, 10)})`),
+  },
   plugins: [
     react(),
     VitePWA({
       // Never reload on its own: a reload mid-cook would need another tap to re-enable sound.
       registerType: 'prompt',
       injectRegister: false,
-      includeAssets: ['icons/*.png', 'icons/*.svg', 'recipe-cards.v1.schema.json'],
       manifest: {
         name: 'Recipe Cards',
         short_name: 'Recipes',
