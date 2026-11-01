@@ -2,7 +2,7 @@
 
 A personal cook-mode web app. It imports recipes that the `recipe-cards` Claude agent has already turned into step cards, then walks you through them one card at a time, with a timer ready on any step that needs one.
 
-- **No backend of its own.** Recipes are stored on each device, in IndexedDB. Optional sync keeps them the same on every device through a private GitHub repository.
+- **No backend of its own.** Recipes are stored on each device, in IndexedDB. Optional sync keeps them the same on every device through a branch of this GitHub repository.
 - **Works offline.** It's an installable PWA, hosted free on GitHub Pages.
 - **Never fetches recipe sites, calls an AI or holds an API key.** All the conversion happens in the agent.
 
@@ -76,20 +76,24 @@ The Home Screen app keeps its own storage, separate from Safari tabs. Recipes im
 
 ### 7. Turn on sync
 
-Sync keeps the same recipes on every device. They're stored in a private GitHub repository, `ngerver1/recipe-data`, as one file (`recipe-cards-library.json`). Every change is a commit there, so GitHub also keeps a full history.
+Sync keeps the same recipes on every device. They're stored in this repository, `ngerver1/Recipe`, on a separate branch called `recipe-data` that holds just one file (`recipe-cards-library.json`). The app creates the branch on its first sync. Keeping it separate means syncing never touches the app's code or re-publishes the site. Every change is a commit on that branch, so GitHub also keeps a full history.
 
-**Make a sync key (once).** A sync key is a GitHub token that can only read and write that one repository.
+**The library is public.** This repository has to be public for free GitHub Pages hosting, so anyone browsing it can see your recipe list and when you cooked them. To keep recipes private, create a private repository, choose it in step 3 below, and enter its name in the app instead.
+
+**Make a sync key (once).** A sync key is a GitHub token limited to this one repository.
 
 1. Open https://github.com/settings/personal-access-tokens/new.
 2. **Token name:** `Recipe Cards sync`. **Expiration:** your choice. When it runs out, the app says so and you make a new one.
-3. **Repository access:** choose **Only select repositories**, then pick **ngerver1/recipe-data**.
+3. **Repository access:** choose **Only select repositories**, then pick **ngerver1/Recipe**.
 4. **Permissions:** click **Add permissions**, choose **Contents**, and set it to **Read and write**.
 5. Click **Generate token** and copy it. GitHub only shows it once, so keep it somewhere safe, such as your password manager.
+
+The key can also change the app's code, so treat it like a password and don't share it.
 
 **On each device:**
 
 1. Open **Settings → Sync between devices**.
-2. Leave the repository as `ngerver1/recipe-data`.
+2. Leave the repository as `ngerver1/Recipe`.
 3. Paste the key and tap **Turn on sync**.
 
 On the iPad, do this in the Home Screen app, not a Safari tab. To get the key onto the other device, you can also tap **Copy sync key** on a device that's already syncing and send it to yourself.

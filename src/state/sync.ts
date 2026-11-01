@@ -135,7 +135,7 @@ export function scheduleSync(delayMs = 1500) {
 /** Turns sync on after checking the key can reach the repository, then syncs straight away. */
 export async function connectSync(repo: string, token: string): Promise<{ private: boolean }> {
   const cfg = { repo: repo.trim(), token: token.trim() };
-  if (!isRepoName(cfg.repo)) throw new SyncError('The repository should look like owner/name, for example ngerver1/recipe-data.', 'other');
+  if (!isRepoName(cfg.repo)) throw new SyncError('The repository should look like owner/name, for example ngerver1/Recipe.', 'other');
   if (!cfg.token) throw new SyncError('Paste the sync key first.', 'auth');
   const repoInfo = await checkRepository(cfg);
   config = cfg;

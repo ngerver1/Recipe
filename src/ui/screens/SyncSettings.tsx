@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { formatAgo } from '../../core/format';
 import { SyncError } from '../../core/sync';
+import { SYNC_BRANCH } from '../../sync/github';
 import { connectSync, disconnectSync, getSyncToken, syncNow, useSyncStatus } from '../../state/sync';
 import { useAppState } from '../../state/store';
 import { Icon } from '../components/Icon';
 import { confirmDialog, showToast } from '../components/overlays';
 import { useNow } from '../hooks';
 
-const DEFAULT_REPO = 'ngerver1/recipe-data';
+const DEFAULT_REPO = 'ngerver1/Recipe';
 
 export function SyncSettings() {
   const status = useSyncStatus();
@@ -33,8 +34,8 @@ export function SyncSettings() {
     try {
       const info = await connectSync(repo, token);
       setToken('');
-      showToast(info.private ? 'Sync is on' : 'Sync is on. Note: that repository is public, so anyone can see your recipes.', {
-        durationMs: info.private ? 3500 : 8000,
+      showToast(info.private ? 'Sync is on' : 'Sync is on. That repository is public, so anyone can see your recipe list.', {
+        durationMs: info.private ? 3500 : 6000,
       });
     } catch (e) {
       setError(e instanceof SyncError ? e.message : 'Something went wrong. Check the repository name and key.');
@@ -146,7 +147,7 @@ export function SyncSettings() {
       </p>
       {status.message && status.state !== 'idle' && <p className={status.state === 'error' ? 'error-text' : 'muted'}>{status.message}</p>}
       <p className="muted small">
-        {recipes.length} recipe{recipes.length === 1 ? '' : 's'} · stored in {status.config.repo} on GitHub
+        {recipes.length} recipe{recipes.length === 1 ? '' : 's'} · stored on the {SYNC_BRANCH} branch of {status.config.repo} on GitHub
       </p>
       <div className="button-row">
         <button className="btn btn-primary" onClick={() => void syncNow()} disabled={status.state === 'syncing'}>

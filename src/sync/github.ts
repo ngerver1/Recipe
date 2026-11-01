@@ -2,9 +2,9 @@ import { decodeBase64Utf8, encodeBase64Utf8 } from '../core/base64';
 import { readSyncFile, SyncError, type LibraryState, type SyncFile } from '../core/sync';
 
 /**
- * The shared library file, kept in a private GitHub repository through
- * GitHub's REST API. Each write carries the version (sha) it was based on,
- * so GitHub refuses it if another device wrote in between.
+ * The shared library file, kept on its own branch of a GitHub repository
+ * through GitHub's REST API. Each write carries the version (sha) it was
+ * based on, so GitHub refuses it if another device wrote in between.
  */
 
 export interface GitHubConfig {
@@ -15,6 +15,8 @@ export interface GitHubConfig {
 
 const API = 'https://api.github.com';
 export const SYNC_PATH = 'recipe-cards-library.json';
+/** The library lives on its own branch, away from the app's code. */
+export const SYNC_BRANCH = 'recipe-data';
 
 async function call(config: GitHubConfig, path: string, init: RequestInit = {}, accept = 'application/vnd.github+json'): Promise<Response> {
   try {
@@ -69,9 +71,9 @@ export async function checkRepository(config: GitHubConfig): Promise<{ private: 
 }
 
 export async function fetchLibrary(config: GitHubConfig): Promise<{ library: LibraryState | null; version: string | null }> {
-  const url = `${repoPath(config)}/contents/${SYNC_PATH}`;
+  const url = `${repoPath(config)}/contents/${SYNC_PATH}?ref=${SYNC_BRANCH}`;
   const res = await call(config, url);
-  if (res.status === 404) return { library: null, version: null };
+  if (res.status === 404) return { library: null, version: null }; // no data branch or file yet
   if (!res.ok) throw await failure(res, config);
   const meta = (await res.json()) as { sha: string; content?: string; encoding?: string };
   let text: string;
@@ -93,14 +95,53 @@ export async function fetchLibrary(config: GitHubConfig): Promise<{ library: Lib
 }
 
 export async function saveLibrary(config: GitHubConfig, file: SyncFile, version: string | null, device: string): Promise<void> {
+  const message = `Sync from ${device}: ${file.recipes.length} recipe${file.recipes.length === 1 ? '' : 's'}`;
+  const text = JSON.stringify(file);
   const res = await call(config, `${repoPath(config)}/contents/${SYNC_PATH}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      message: `Sync from ${device}: ${file.recipes.length} recipe${file.recipes.length === 1 ? '' : 's'}`,
-      content: encodeBase64Utf8(JSON.stringify(file)),
-      ...(version ? { sha: version } : {}),
-    }),
+    body: JSON.stringify({ message, content: encodeBase64Utf8(text), branch: SYNC_BRANCH, ...(version ? { sha: version } : {}) }),
   });
+  if (res.ok) return;
+  // The very first sync: the data branch doesn't exist yet, so create it holding the file.
+  if (!version && (res.status === 404 || res.status === 422) && !(await branchExists(config))) {
+    await createDataBranch(config, text, message);
+    return;
+  }
+  throw await failure(res, config);
+}
+
+async function branchExists(config: GitHubConfig): Promise<boolean> {
+  const res = await call(config, `${repoPath(config)}/branches/${SYNC_BRANCH}`);
+  if (res.status === 404) return false;
   if (!res.ok) throw await failure(res, config);
+  return true;
+}
+
+const DATA_README = `# Recipe Cards library
+
+This branch holds the recipe library that the Recipe Cards app syncs between devices
+(${SYNC_PATH}). The app writes it; there's no need to edit it by hand.
+`;
+
+/** A branch with no history of its own, holding only the library file, so syncs never touch the app's code or redeploy it. */
+async function createDataBranch(config: GitHubConfig, text: string, message: string): Promise<void> {
+  const post = async (path: string, body: unknown) => {
+    const res = await call(config, `${repoPath(config)}${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    if (res.status === 422 && path === '/git/refs') throw new SyncError('Another device created the sync branch at the same moment.', 'conflict');
+    if (!res.ok) throw await failure(res, config);
+    return (await res.json()) as { sha: string };
+  };
+  const tree = await post('/git/trees', {
+    tree: [
+      { path: SYNC_PATH, mode: '100644', type: 'blob', content: text },
+      { path: 'README.md', mode: '100644', type: 'blob', content: DATA_README },
+    ],
+  });
+  const commit = await post('/git/commits', { message, tree: tree.sha, parents: [] });
+  await post('/git/refs', { ref: `refs/heads/${SYNC_BRANCH}`, sha: commit.sha });
 }
