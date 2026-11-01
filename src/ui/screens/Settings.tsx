@@ -12,10 +12,12 @@ import {
   type ThemePref,
 } from '../../platform/prefs';
 import { useAppState } from '../../state/store';
+import { useSyncStatus } from '../../state/sync';
 import { canShareFiles, downloadBackup, restoreBackup, shareBackup } from '../backupActions';
 import { Icon } from '../components/Icon';
 import { showToast } from '../components/overlays';
 import { TopBar } from '../components/TopBar';
+import { SyncSettings } from './SyncSettings';
 import { navigate } from '../router';
 
 function Segmented<T extends string>({ value, options, onChange, label }: { value: T; options: [T, string][]; onChange: (v: T) => void; label: string }) {
@@ -32,6 +34,7 @@ function Segmented<T extends string>({ value, options, onChange, label }: { valu
 
 export function SettingsScreen({ updateReady, onUpdate }: { updateReady: boolean; onUpdate: () => void }) {
   const { recipes, persisted } = useAppState();
+  const sync = useSyncStatus();
   const [theme, setTheme] = useState<ThemePref>(getThemePref);
   const [keepAwake, setKeepAwake] = useState<KeepAwakeMode>(getKeepAwakeMode);
   const status = useKeepAwakeStatus();
@@ -79,6 +82,8 @@ export function SettingsScreen({ updateReady, onUpdate }: { updateReady: boolean
           />
         </section>
 
+        <SyncSettings />
+
         <section className="settings-group">
           <h2>Keep the screen on</h2>
           <p className="muted">The screen stays on whenever this app is open.</p>
@@ -121,8 +126,10 @@ export function SettingsScreen({ updateReady, onUpdate }: { updateReady: boolean
         <section className="settings-group">
           <h2>Backup</h2>
           <p className="muted">
-            {recipes.length} recipe{recipes.length === 1 ? '' : 's'} on this device. Recipes are stored only on this device, so keep a backup file
-            somewhere safe, like Files or Google Drive.
+            {recipes.length} recipe{recipes.length === 1 ? '' : 's'} on this device.{' '}
+            {sync.config
+              ? 'Sync keeps a copy on GitHub too. A backup file is an extra copy you control.'
+              : 'Without sync, recipes are stored only on this device, so keep a backup file somewhere safe, like Files or Google Drive.'}
           </p>
           <div className="button-row">
             {canShareFiles() && (

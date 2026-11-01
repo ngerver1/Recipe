@@ -2,7 +2,7 @@
 
 A personal cook-mode web app. It imports recipes that the `recipe-cards` Claude agent has already turned into step cards, then walks you through them one card at a time, with a timer ready on any step that needs one.
 
-- **No backend.** Recipes and your place in a recipe stay on each device, in IndexedDB.
+- **No backend of its own.** Recipes are stored on each device, in IndexedDB. Optional sync keeps them the same on every device through a private GitHub repository.
 - **Works offline.** It's an installable PWA, hosted free on GitHub Pages.
 - **Never fetches recipe sites, calls an AI or holds an API key.** All the conversion happens in the agent.
 
@@ -74,14 +74,46 @@ The Home Screen app keeps its own storage, separate from Safari tabs. Recipes im
 
    The screen stays on whenever the app is open, using Screen Wake Lock plus, on iPad and iPhone, a silent video that starts on your first tap. **Settings** shows what's active.
 
-### 7. Keep a backup
+### 7. Turn on sync
 
-Recipes live only on each device, and Safari can clear website data that hasn't been used for a while.
+Sync keeps the same recipes on every device. They're stored in a private GitHub repository, `ngerver1/recipe-data`, as one file (`recipe-cards-library.json`). Every change is a commit there, so GitHub also keeps a full history.
 
-1. Every so often, open **Settings → Backup**.
+**Make a sync key (once).** A sync key is a GitHub token that can only read and write that one repository.
+
+1. Open https://github.com/settings/personal-access-tokens/new.
+2. **Token name:** `Recipe Cards sync`. **Expiration:** your choice. When it runs out, the app says so and you make a new one.
+3. **Repository access:** choose **Only select repositories**, then pick **ngerver1/recipe-data**.
+4. **Permissions:** click **Add permissions**, choose **Contents**, and set it to **Read and write**.
+5. Click **Generate token** and copy it. GitHub only shows it once, so keep it somewhere safe, such as your password manager.
+
+**On each device:**
+
+1. Open **Settings → Sync between devices**.
+2. Leave the repository as `ngerver1/recipe-data`.
+3. Paste the key and tap **Turn on sync**.
+
+On the iPad, do this in the Home Screen app, not a Safari tab. To get the key onto the other device, you can also tap **Copy sync key** on a device that's already syncing and send it to yourself.
+
+**When sync happens:** when the app opens, a moment after any change, when you come back to the app, when the connection returns, and every few minutes while it's open. You can also tap **Sync now**.
+
+**How changes combine:**
+
+- A recipe added on either device is kept.
+- A deleted recipe stays deleted.
+- If the same recipe changed on both devices, the later change wins, and "last cooked" keeps the later date.
+- The same recipe imported separately on both devices becomes one.
+- If you're offline, nothing is lost. Changes go up when you're back online.
+
+**What stays on each device:** your place in a recipe, running timers and settings. Each device can be cooking something different.
+
+### 8. Keep a backup (optional with sync)
+
+Without sync, recipes live only on each device, and Safari can clear website data that hasn't been used for a while. With sync, GitHub holds a copy. A backup file is an extra copy you control.
+
+1. Open **Settings → Backup**.
    - **iPad:** tap **Share backup…** and choose **Save to Files**.
    - **Pixel:** tap **Download backup**.
-2. To restore, or to copy your recipes to the other device, tap **Restore from backup** and pick that file. Restoring never deletes anything.
+2. To restore, tap **Restore from backup** and pick that file. Restoring never deletes anything.
 
 ## Cooking
 
@@ -165,9 +197,10 @@ npm run schema     # regenerate public/recipe-cards.v1.schema.json after changin
 
 | Folder | What's in it |
 | --- | --- |
-| `src/core/` | Pure functions with unit tests: parsing and forgiving paste, validation, cook session (Done, Undo, jumping, resuming), timers, quantity formatting, dedupe, search, backup |
+| `src/core/` | Pure functions with unit tests: parsing and forgiving paste, validation, cook session (Done, Undo, jumping, resuming), timers, quantity formatting, dedupe, search, backup, and the sync merge |
 | `src/data/` | IndexedDB |
-| `src/state/` | The app store: recipes and the cook session, saved on every change |
+| `src/state/` | The app store (recipes and the cook session, saved on every change) and sync scheduling |
+| `src/sync/` | The GitHub connection used by sync |
 | `src/platform/` | Wake lock with its video fallback, the chime and vibration, per-device preferences |
 | `src/ui/` | Screens and components |
 
@@ -177,4 +210,4 @@ These aren't in v1, but the data model is ready for them:
 
 - **Servings scaler:** ingredient and `uses` quantities are numeric, so scaling the ingredient list and the “You'll need” chips is a small change. Quantities written inside step text would need the agent to mark them, which means a format change.
 - **Voice control:** cook-mode actions are plain functions (`markDone`, `goToStep`, `startStepTimer`), so commands like “done”, “next” and “start timer” can call them.
-- **Sync, editing and the Android share target:** none of these need a schema change.
+- **Editing and the Android share target:** neither needs a schema change.

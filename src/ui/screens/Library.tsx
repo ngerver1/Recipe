@@ -8,11 +8,13 @@ import { validateRecipe } from '../../core/validate';
 import { findRecipe, removeRecipe, saveRecipe, setSession, useAppState, type LoadedRecipe } from '../../state/store';
 import { Icon } from '../components/Icon';
 import { confirmDialog, hideToast, showToast } from '../components/overlays';
+import { useSyncStatus } from '../../state/sync';
 import { useNow } from '../hooks';
 import { navigate } from '../router';
 
 export function LibraryScreen({ updateReady, onUpdate }: { updateReady: boolean; onUpdate: () => void }) {
   const { loaded, recipes, session, storageError } = useAppState();
+  const sync = useSyncStatus();
   const [query, setQuery] = useState('');
   const now = useNow(1000, !!session?.timers.length);
 
@@ -42,6 +44,14 @@ export function LibraryScreen({ updateReady, onUpdate }: { updateReady: boolean;
 
       <main className="content">
         {storageError && <p className="banner banner-error">{storageError}</p>}
+        {sync.state === 'error' && (
+          <div className="banner banner-error">
+            <span>Sync isn’t working: {sync.message}</span>
+            <button className="btn btn-plain" onClick={() => navigate({ name: 'settings' })}>
+              Settings
+            </button>
+          </div>
+        )}
         {updateReady && (
           <div className="banner banner-info">
             <span>A new version of the app is ready.</span>

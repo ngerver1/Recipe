@@ -1,6 +1,7 @@
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
 import type { RecipeRecord } from '../core/library';
 import { isCookSession, type CookSession } from '../core/session';
+import type { Tombstone } from '../core/sync';
 
 interface RecipeCardsDB extends DBSchema {
   recipes: { key: string; value: RecipeRecord };
@@ -28,8 +29,22 @@ export async function putRecipes(records: RecipeRecord[]): Promise<void> {
   await Promise.all([...records.map((r) => tx.store.put(r)), tx.done]);
 }
 
-export async function deleteRecipe(id: string): Promise<void> {
-  await (await db()).delete('recipes', id);
+export async function deleteRecipes(ids: string[]): Promise<void> {
+  if (!ids.length) return;
+  const tx = (await db()).transaction('recipes', 'readwrite');
+  await Promise.all([...ids.map((id) => tx.store.delete(id)), tx.done]);
+}
+
+/** Deleted recipe ids, kept so a deletion syncs to other devices instead of the recipe coming back. */
+export async function loadTombstones(): Promise<Tombstone[]> {
+  const value = await (await db()).get('kv', 'tombstones');
+  return Array.isArray(value)
+    ? value.filter((t): t is Tombstone => typeof t?.id === 'string' && typeof t?.deletedAt === 'number')
+    : [];
+}
+
+export async function saveTombstones(tombstones: Tombstone[]): Promise<void> {
+  await (await db()).put('kv', tombstones, 'tombstones');
 }
 
 export async function loadSession(): Promise<CookSession | null> {

@@ -6,6 +6,8 @@ export interface RecipeRecord {
   /** The recipe JSON as imported, unchanged, so export round-trips. */
   raw: unknown;
   importedAt: number;
+  /** When the recipe itself last changed (imported or replaced). Missing on older records: use importedAt. */
+  updatedAt?: number;
   lastCookedAt?: number;
   /** Used to spot the same recipe being imported twice. */
   dedupeKey: string;
